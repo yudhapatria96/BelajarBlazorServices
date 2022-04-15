@@ -1,0 +1,67 @@
+﻿@page "/login"
+@inject ILoginService loginService
+@inject NavigationManager NavigationaManager
+
+<center>
+    <div class="login-box">
+        <div class="card card-outline card-primary">
+            <div class="card-body">
+                <p class="login-box-msg">Login</p>
+                <div class="input-group mb-3">
+                    <input 
+                        class="form-control"
+                        id="email"
+                        placeholder="email"
+                        @bind= "username"
+
+                    />
+                </div>
+                 <div class="input-group mb-3">
+                    <input 
+                        class="form-control"
+                        id="password"
+                        placeholder="password"
+                        type="password"
+                        @bind= "password"
+                    />
+                </div>
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block float-right" onclick="@loginUser" >Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
+
+@code {
+    User userParam = new User();
+    string username = "";
+    string password = "";
+    //LoginService loginService;
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    HttpClient httpClient = new HttpClient();
+    //    loginService = new LoginService(httpClient);
+
+    //}
+
+    public async void loginUser()
+    {
+        userParam.id = 0;
+        userParam.name = "";
+        userParam.username = username;
+        userParam.password = password;
+
+        await loginService.Login(userParam);
+
+        if(loginService.users != null)
+        {
+
+            NavigationaManager.NavigateTo("/");
+
+        }
+    }
+}
+
